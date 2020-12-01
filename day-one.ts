@@ -203,27 +203,28 @@ const data = [
 
 // This is a class difference dictionary problem. Or in other words build a diction of "difference versus target value" and keep adding difference key/val pairs until we find the corresponing match. Then simply multiply key found against number iterated in data.
 
-const dictionary: Record<number,number> = {};
+const dictionary: Record<string,number> = {};
 const target = 2020;
 
-const findTarget = () => {
+const findTarget = (data:number[],target:number) => {
   for(let i=0; i< data.length; i++) {
     const difference = target - data[i];
     if(difference === 0){
-      return data[i]*data[i];
+      return target*target;
     } 
     if (difference > 0) {
       //check first to see whether this diff value exists in dictionary. If so we are done!
       if(dictionary[difference]) {
-        return data[i]*data[i];
+        console.log('found a matching pair')
+        return dictionary[difference]*difference;
       }
       //otherwise add new combo
-      dictionary[difference] = data[i];
+      dictionary[data[i]] = difference;
     }
   }
 
   //we didnt find a valid pairs
-  throw Error (`Could not find valid pair that matched target ${target}`);
+  return null;
 }
 
-console.log('multiplied value is', findTarget());
+console.log('multiplied value is', findTarget(data,target));
