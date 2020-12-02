@@ -206,7 +206,7 @@ const data = [
 const dictionary: Record<string,number> = {};
 const target = 2020;
 
-const findTarget = (data:number[],target:number) => {
+const twoSum = (data:number[],target:number) => {
   for(let i=0; i< data.length; i++) {
     const difference = target - data[i];
     if(difference === 0){
@@ -227,4 +227,4 @@ const findTarget = (data:number[],target:number) => {
   return null;
 }
 
-console.log('multiplied value is', findTarget(data,target));
+console.log('multiplied value is', twoSum(data,target));

@@ -1,3 +1,10 @@
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 var data = [
     1977,
     1856,
@@ -200,25 +207,39 @@ var data = [
     951,
     1849,
 ];
+var data2 = [1, 2, 2017];
 // This is a class difference dictionary problem. Or in other words build a diction of "difference versus target value" and keep adding difference key/val pairs until we find the corresponing match. Then simply multiply key found against number iterated in data.
-var dictionary = {};
+var twoSumDictionary = {};
+var threeSumDictionary = {};
 var target = 2020;
-var findTarget = function () {
+var twoSum = function (data, target) {
     for (var i = 0; i < data.length; i++) {
         var difference = target - data[i];
         if (difference === 0) {
-            return data[i] * data[i];
+            return target * target;
         }
         if (difference > 0) {
             //check first to see whether this diff value exists in dictionary. If so we are done!
-            if (dictionary[difference]) {
-                return data[i] * data[i];
+            if (twoSumDictionary[difference]) {
+                console.log('found a matching pair');
+                return twoSumDictionary[difference] * difference;
             }
             //otherwise add new combo
-            dictionary[difference] = data[i];
+            twoSumDictionary[data[i]] = difference;
         }
     }
     //we didnt find a valid pairs
-    throw Error("Could not find valid pair that matched target " + target);
+    return null;
 };
-console.log('multiplied value is', findTarget());
+var threeSum = function (data, target) {
+    //we are going to fix each number in data then run two sum on rest of array each time
+    for (var i = 0; i < data.length; i++) {
+        var difference = target - data[i];
+        //if we find a valid 2 sum for this value return multiplicand 
+        if (twoSum(__spreadArrays(data.slice(i + 1)), difference))
+            return data[i] * twoSum(__spreadArrays(data.slice(i + 1)), difference);
+    }
+    //we didnt find a valid 3 sum
+    return null;
+};
+console.log('multiplied value is', threeSum(data2, target));
